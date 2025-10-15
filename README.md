@@ -20,7 +20,4 @@
 - The pretrained model is stored in [Google Drive](https://drive.google.com/file/d/1fJpCAKDIISC5yQcr4XASalv95hdI5cB4/view?usp=drive_link) . After downloading, please change the file path in the corresponding code.
 - Run `train.sh` to train.
 
-### 4. Testing Configuration
-
-Our well-trained model is stored in [Google Drive](https://drive.google.com/file/d/1LfKhIV0cXl_lNpkrLsv4TMvcRMx_IIYW/view?usp=drive_link) After downloading, please change the file path in the corresponding code.
 
