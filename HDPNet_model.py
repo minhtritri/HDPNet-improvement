@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from utils import intersect_dicts
 import HourglassPvt2_Base
+# import HourlassSwin
 
 
 class LocalAttention(nn.Module):
@@ -192,13 +193,17 @@ class Model(nn.Module):
         # self.encoder = HourglassPvt_Base.Hourglass_vision_transformer_base()
         # self.encoder = HourglassVIT.Hourglass_vision_transformer()
         self.encoder = HourglassPvt2_Base.Hourglass_vision_transformer_base_v2()
+        # self.encoder = HourlassSwin.Hourglass_vision_transformer_base_swin()
         if ckpt_path is not None:
             ckpt = torch.load(ckpt_path, map_location='cpu')
             # msg = self.encoder.load_state_dict(ckpt["model"], strict=False)
             # csd = ckpt['model']  # checkpoint state_dict as FP32
-            csd = intersect_dicts(ckpt, self.encoder.state_dict())  # intersect
+            state_dict = ckpt["model"] if "model" in ckpt else ckpt
+            # print(state_dict.shape)
+            csd = intersect_dicts(state_dict, self.encoder.state_dict())  # intersect
+            print(csd)
             msg = self.encoder.load_state_dict(csd, strict=False)  # load
-
+            print("File 2 keys:", ckpt.keys() if isinstance(ckpt, dict) else "pure state_dict")
             print("====================================")
             pt_name = ckpt_path.split('/')[-1]
             print(f'Transferred {len(csd)}/{len(self.encoder.state_dict())} items from {pt_name}')
